@@ -34,7 +34,7 @@ stop.addEventListener("click", function () {
 reset.addEventListener("click", function () {
   isShowed = false;
   clearInterval(int);
-  time.innerHTML = `00 : 00 : 00 : 000 `;
+  time.innerHTML = `00 : 00 : 00 : 00 `;
   timer = {
     hours: 0,
     minutes: 0,
