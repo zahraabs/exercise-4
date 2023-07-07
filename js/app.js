@@ -4,7 +4,7 @@ var stop = document.querySelector(".buttons button:nth-child(2)");
 var reset = document.querySelector(".buttons button:nth-child(3)");
 var list = document.querySelector("ul");
 var int = null;
-var flag = false;
+var isShowed = false;
 var timer = {
   hours: 0,
   minutes: 0,
@@ -16,14 +16,14 @@ start.addEventListener("click", function () {
   if (int !== null) {
     clearInterval(int);
   }
-  flag = true;
+  isShowed = true;
   int = setInterval(displayTimer, 10);
 })
 
 stop.addEventListener("click", function () {
-  if (flag == true) {
+  if (isShowed == true) {
     list.style.display = "block";
-    list.innerHTML += `<li>${timer.hours} : ${timer.minutes} : ${timer.seconds} :${timer.milliSeconds}</li>`;
+    list.innerHTML += `<li>${paddingStart(timer.hours)} : ${paddingStart(timer.minutes)} : ${paddingStart(timer.seconds)} :${paddingStart(timer.milliSeconds)}</li>`;
   } else {
     list.style.display = "none";
   }
@@ -32,9 +32,9 @@ stop.addEventListener("click", function () {
 
 
 reset.addEventListener("click", function () {
-  flag = false;
+  isShowed = false;
   clearInterval(int);
-  time.innerHTML = `00 : 00 : 00 : 00 `;
+  time.innerHTML = `00 : 00 : 00 : 000 `;
   timer = {
     hours: 0,
     minutes: 0,
@@ -47,8 +47,8 @@ reset.addEventListener("click", function () {
 
 
 function displayTimer() {
-  timer.milliSeconds += 10;
-  if (timer.milliSeconds == 1000) {
+  timer.milliSeconds += 1;
+  if (timer.milliSeconds == 100) {
     timer.milliSeconds = 0;
     timer.seconds++;
     if (timer.seconds == 60) {
@@ -70,20 +70,13 @@ function displayTimer() {
     minute = "0" + minute;
   }; if (timer.hours < 10) {
     hour = '0' + hour;
-  }; if (timer.milliSeconds < 100) {
+  }; if (timer.milliSeconds < 10) {
     milliSecond = "0" + milliSecond;
   }
   time.innerHTML = `${hour} : ${minute} : ${second} :${milliSecond}`;
 }
 
-// function zero(time) {
-//   if (time < 10 ) {
-//   time = '0' + time;
-//   }
-//   return time;
-// }
 
-// var second = zero(timer.seconds);
-// // var milliSecond = zero(timer.milliSeconds);
-// var minute = zero(timer.minutes);
-// var hour = zero(timer.hours);
+function paddingStart(time) {
+  return String(time).padStart(2 , "0");
+}
